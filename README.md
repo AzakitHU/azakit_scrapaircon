@@ -6,6 +6,7 @@ Everything can be easily changed in the config.lua file.
 * Checking items
 * Police check
 * 10 preset addresses
+* Skill Check
 * Discord Webhook
 
 # Preview
