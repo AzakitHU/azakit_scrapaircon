@@ -13,7 +13,7 @@ Everything can be easily changed in the config.lua file.
 https://www.youtube.com/watch?v=Ab7BbZ6EPRI
 
 # Install
-- Clone or Download the [repository](https://github.com/AzakitHU/azakit_scrapaircon).
+- Download the [repository](https://github.com/AzakitHU/azakit_scrapaircon).
 - Add the **azakit_scrapaircon** to your resources folder.
 - Add `ensure azakit_scrapaircon` to your **server.cfg**.
 
