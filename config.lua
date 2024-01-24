@@ -7,7 +7,7 @@ blipcolour = 3
 blipsprite = 544
 
 ITEM = "weapon_wrench"  -- item for work
-ITEM_REMOVE = false -- required item remove on check
+ITEM_REMOVE = false -- removal of required item in case of successful dismantling
 TICKETITEM_REQ = true -- if true, you need an extra ticket item
 TICKETITEM = "infoticket" -- ticket item
 TICKETITEM_AMOUNT = 1 -- the number of tickets check/remove
