@@ -1,6 +1,8 @@
 LANGUAGE = 'en'
 Webhook = "" -- Discord Webhook
 
+Framework = "" -- QB or ESX
+
 -- Blip settings
 blipscale = 1.0
 blipcolour = 3
