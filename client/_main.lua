@@ -1,11 +1,11 @@
 StartNPC, HasGold = {},
 
-Citizen.CreateThread(function()       
+Citizen.CreateThread(function()
     StartNPC = SpawnNPC(START_NPC.ped.model, START_NPC.ped.coords, START_NPC.ped.heading)
     FreezeEntityPosition(StartNPC, true)
     SetEntityInvincible(StartNPC, true)
     SetBlockingOfNonTemporaryEvents(StartNPC, true)
-    TaskStartScenarioInPlace(StartNPC, "WORLD_HUMAN_SMOKING", 0, true)    
+    TaskStartScenarioInPlace(StartNPC, "WORLD_HUMAN_SMOKING", 0, true)
     AddEntityMenuItem({
         entity = StartNPC,
         event = "azakit_scrapaircon:StartDisassembly",
@@ -17,8 +17,8 @@ end)
 
 function StartDisassembly()
     TriggerServerCallback('azakit_scrapaircon:Start', function(data)
-        
-        if not data.cops then    
+
+        if not data.cops then
             lib.notify({
                 position = 'top',
                 title = _("nopolice"),
@@ -27,7 +27,7 @@ function StartDisassembly()
             return
         end
 		TriggerEvent('azakit_scrapaircon:Check')
-    
+
     end)
 end
 RegisterNetEvent("azakit_scrapaircon:StartDisassembly", StartDisassembly)
@@ -35,20 +35,20 @@ RegisterNetEvent("azakit_scrapaircon:StartDisassembly", StartDisassembly)
 
 
 RegisterNetEvent('azakit_scrapaircon:Check', function()
-   
+
     local hasItem = true
     lib.notify({
         position = 'top',
         title = _("check"),
         type = 'info'
       })
-    
+
     if ITEM then
         hasItem = false
-        
+
         TriggerServerCallback('azakit_scrapaircon:itemTaken', function(cb)
         hasItem = cb
-        
+
         end)
         Wait(1000)
     end
@@ -109,7 +109,7 @@ Citizen.CreateThread(function()
 						duration = 0,
 					}) then InteractAirConditioner(index)
 						Disassemblygestart = false
-						RemoveBlip(Disassemblyblip) 
+						RemoveBlip(Disassemblyblip)
 					end
 				end
 			else
@@ -146,7 +146,7 @@ function InteractAirConditioner(index)
     if Interact then return end
     Interact = true
         local ped = PlayerPedId()
-        
+
 -- Load animation dictionary
 RequestAnimDict('mini@repair')
 while not HasAnimDictLoaded('mini@repair') do
@@ -155,10 +155,10 @@ end
        -- lib.requestAnimDict('mini@repair', 10)
         TaskPlayAnim(PlayerPedId(), "mini@repair", "fixing_a_ped", 8.0, -8.0, -1, 48, 0)
         if Check.EnableSkillCheck then
-            local success = lib.skillCheck({'easy', 'easy', 'easy', 'easy'}, { 'w', 'a', 's', 'd' }) 
-            if success then 
+            local success = lib.skillCheck({'easy', 'easy', 'easy', 'easy'}, { 'w', 'a', 's', 'd' })
+            if success then
                 ExchangeRequest(index)
-            else                
+            else
                 lib.notify({
                     position = 'top',
                     title = _("failed"),
@@ -183,7 +183,7 @@ end
             ExchangeRequest(index)
         end
         ClearPedTasks(ped)
-        Interact = false  
+        Interact = false
 end
 
 
