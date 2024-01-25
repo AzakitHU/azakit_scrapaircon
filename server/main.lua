@@ -19,65 +19,126 @@ RegisterServerCallback('azakit_scrapaircon:Start', function(source, cb)
 end)
 
 RegisterServerCallback('azakit_scrapaircon:itemTaken',function(source, cb)
-    local src = source
-    local xPlayer = ESX.GetPlayerFromId(source)
-    local item = xPlayer.getInventoryItem(ITEM) 
-    local itemtick = xPlayer.getInventoryItem(TICKETITEM) 
-    if TICKETITEM_REQ and TICKETITEM_REMOVE then
-        if item.count >= 1 and itemtick.count >= TICKETITEM_AMOUNT then            
-            xPlayer.removeInventoryItem(TICKETITEM, TICKETITEM_AMOUNT)
-             local message = "**Steam:** " .. GetPlayerName(src) .. "\n**Identifier:** " .. xPlayer.identifier .. "\n**ID:** " .. src .. "\n**Log:** Started Metalscrap."
-            discordLog(message, Webhook)
-        cb(true)
-         else
-        cb(false)
-         end  
-    elseif TICKETITEM_REQ and not TICKETITEM_REMOVE then
-        if item.count >= 1 and itemtick.count >= TICKETITEM_AMOUNT then     
-             local message = "**Steam:** " .. GetPlayerName(src) .. "\n**Identifier:** " .. xPlayer.identifier .. "\n**ID:** " .. src .. "\n**Log:** Started Metalscrap."
-            discordLog(message, Webhook)
-        cb(true)
-         else
-        cb(false)
-         end  
-    else        
-        if item.count >= 1 then            
-             local message = "**Steam:** " .. GetPlayerName(src) .. "\n**Identifier:** " .. xPlayer.identifier .. "\n**ID:** " .. src .. "\n**Log:** Started Metalscrap."
-            discordLog(message, Webhook)
-        cb(true)
-         else
-        cb(false)
-         end  
-    end     
+    if Framework == "ESX" then
+        local src = source
+        local xPlayer = ESX.GetPlayerFromId(src)
+        local item = xPlayer.getInventoryItem(ITEM) 
+        local itemtick = xPlayer.getInventoryItem(TICKETITEM) 
+        if TICKETITEM_REQ and TICKETITEM_REMOVE then
+            if item.count >= 1 and itemtick.count >= TICKETITEM_AMOUNT then            
+                xPlayer.removeInventoryItem(TICKETITEM, TICKETITEM_AMOUNT)
+                 local message = "**Steam:** " .. GetPlayerName(src) .. "\n**Identifier:** " .. xPlayer.identifier .. "\n**ID:** " .. src .. "\n**Log:** Started Metalscrap."
+                discordLog(message, Webhook)
+            cb(true)
+             else
+            cb(false)
+             end  
+        elseif TICKETITEM_REQ and not TICKETITEM_REMOVE then
+            if item.count >= 1 and itemtick.count >= TICKETITEM_AMOUNT then     
+                 local message = "**Steam:** " .. GetPlayerName(src) .. "\n**Identifier:** " .. xPlayer.identifier .. "\n**ID:** " .. src .. "\n**Log:** Started Metalscrap."
+                discordLog(message, Webhook)
+            cb(true)
+             else
+            cb(false)
+             end  
+        else        
+            if item.count >= 1 then            
+                 local message = "**Steam:** " .. GetPlayerName(src) .. "\n**Identifier:** " .. xPlayer.identifier .. "\n**ID:** " .. src .. "\n**Log:** Started Metalscrap."
+                discordLog(message, Webhook)
+            cb(true)
+             else
+            cb(false)
+             end  
+        end
+    elseif Framework == "QB" then
+        local src = source
+        local Player = QBCore.Functions.GetPlayer(src)
+        local item = exports.ox_inventory:GetItem(src, ITEM, nil, true)
+        local itemtick = exports.ox_inventory:GetItem(src, TICKETITEM, nil, true)
+        if TICKETITEM_REQ and TICKETITEM_REMOVE then
+            if item.count >= 1 and itemtick.count >= TICKETITEM_AMOUNT then            
+                exports.ox_inventory:RemoveItem(src, TICKETITEM, TICKETITEM_AMOUNT)
+                 local message = "**Steam:** " .. GetPlayerName(src) .. "\n**Identifier:** " .. Player.PlayerData.citizenid .. "\n**ID:** " .. src .. "\n**Log:** Started Metalscrap."
+                discordLog(message, Webhook)
+            cb(true)
+             else
+            cb(false)
+             end  
+        elseif TICKETITEM_REQ and not TICKETITEM_REMOVE then
+            if item.count >= 1 and itemtick.count >= TICKETITEM_AMOUNT then     
+                 local message = "**Steam:** " .. GetPlayerName(src) .. "\n**Identifier:** " .. Player.PlayerData.citizenid .. "\n**ID:** " .. src .. "\n**Log:** Started Metalscrap."
+                discordLog(message, Webhook)
+            cb(true)
+             else
+            cb(false)
+             end  
+        else        
+            if item.count >= 1 then            
+                 local message = "**Steam:** " .. GetPlayerName(src) .. "\n**Identifier:** " .. Player.identifier .. "\n**ID:** " .. src .. "\n**Log:** Started Metalscrap."
+                discordLog(message, Webhook)
+            cb(true)
+             else
+            cb(false)
+             end  
+        end
+    end       
 end)
 
 
 RegisterServerCallback("azakit_scrapaircon:exchangeProcess", function(source, cb, index)
-    local xPlayer = ESX.GetPlayerFromId(source)
-    local src = source
-    local item = xPlayer.getInventoryItem(ITEM)
-    local amount = math.random(Minrewardamount, Maxrewardamount)
-    local reward = amount
-    if ITEM_REMOVE then
-         if item.count >= 1 then
-              xPlayer.removeInventoryItem(ITEM, 1)
-             xPlayer.addInventoryItem(Rewarditem, reward) 
-             cb(true)
-             local message = "**Steam:** " .. GetPlayerName(src) .. "\n**Identifier:** " .. xPlayer.identifier .. "\n**ID:** " .. src .. "\n**Log:** Successful metalscrap!"
-             discordLog(message, Webhook)  
-         else
-             cb(false)
-         end
-    else
-        if item.count >= 1 then         
-           xPlayer.addInventoryItem(Rewarditem, reward) 
-           cb(true)
-           local message = "**Steam:** " .. GetPlayerName(src) .. "\n**Identifier:** " .. xPlayer.identifier .. "\n**ID:** " .. src .. "\n**Log:** Successful metalscrap!"
-           discordLog(message, Webhook)  
-       else
-           cb(false)
-       end
-    end   
+    if Framework == "ESX" then    
+        local xPlayer = ESX.GetPlayerFromId(src)
+        local src = source
+        local item = xPlayer.getInventoryItem(ITEM)
+        local amount = math.random(Minrewardamount, Maxrewardamount)
+        local reward = amount
+        if ITEM_REMOVE then
+             if item.count >= 1 then
+                  xPlayer.removeInventoryItem(ITEM, 1)
+                 xPlayer.addInventoryItem(Rewarditem, reward) 
+                 cb(true)
+                 local message = "**Steam:** " .. GetPlayerName(src) .. "\n**Identifier:** " .. xPlayer.identifier .. "\n**ID:** " .. src .. "\n**Log:** Successful metalscrap!"
+                 discordLog(message, Webhook)  
+             else
+                 cb(false)
+             end
+        else
+            if item.count >= 1 then         
+               xPlayer.addInventoryItem(Rewarditem, reward) 
+               cb(true)
+               local message = "**Steam:** " .. GetPlayerName(src) .. "\n**Identifier:** " .. xPlayer.identifier .. "\n**ID:** " .. src .. "\n**Log:** Successful metalscrap!"
+               discordLog(message, Webhook)  
+           else
+               cb(false)
+           end
+        end 
+    elseif Framework == "QB" then
+        local src = source
+        local Player = QBCore.Functions.GetPlayer(src)
+        local item = exports.ox_inventory:GetItem(src, ITEM, nil, true)
+        local amount = math.random(Minrewardamount, Maxrewardamount)
+        local reward = amount
+        if ITEM_REMOVE then
+             if item.count >= 1 then
+                 exports.ox_inventory:RemoveItem(src, ITEM, 1)   
+                 exports.ox_inventory:AddItem(src, Rewarditem, reward)   
+                 cb(true)
+                 local message = "**Steam:** " .. GetPlayerName(src) .. "\n**Identifier:** " .. xPlayer.identifier .. "\n**ID:** " .. src .. "\n**Log:** Successful metalscrap!"
+                 discordLog(message, Webhook)  
+             else
+                 cb(false)
+             end
+        else
+            if item.count >= 1 then         
+               exports.ox_inventory:AddItem(src, Rewarditem, reward)     
+               cb(true)
+               local message = "**Steam:** " .. GetPlayerName(src) .. "\n**Identifier:** " .. xPlayer.identifier .. "\n**ID:** " .. src .. "\n**Log:** Successful metalscrap!"
+               discordLog(message, Webhook)  
+           else
+               cb(false)
+           end
+        end 
+    end 
 end)
 
 function discordLog(message, webhook)
