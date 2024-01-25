@@ -120,8 +120,20 @@ RegisterServerCallback("azakit_scrapaircon:exchangeProcess", function(source, cb
         local reward = amount
         if ITEM_REMOVE then
              if item >= 1 then
-                 exports.ox_inventory:RemoveItem(src, ITEM, 1)
-                 exports.ox_inventory:AddItem(src, Rewarditem, reward)
+                if exports.ox_inventory:CanCarryItem(source, Rewarditem, reward) then
+                    exports.ox_inventory:RemoveItem(src, ITEM, 1)
+                    exports.ox_inventory:AddItem(src, Rewarditem, reward)
+                    return true
+                else
+                         -- Put a Notif of full inventory here
+                        Data = {
+                            title = "OX Inventory",
+                            description = "Inventory is Full",
+                            type = 'error',
+                            duration = 5000
+                        }
+                        TriggerClientEvent('ox_lib:notify', source, Data)
+                end
                  cb(true)
                  local message = "**Steam:** " .. GetPlayerName(src) .. "\n**CID:** " .. Player.PlayerData.citizenid .. "\n**ID:** " .. src .. "\n**Log:** Successful metalscrap!"
                  discordLog(message, Webhook)
@@ -130,7 +142,19 @@ RegisterServerCallback("azakit_scrapaircon:exchangeProcess", function(source, cb
              end
         else
             if item >= 1 then
-               exports.ox_inventory:AddItem(src, Rewarditem, reward)
+                if exports.ox_inventory:CanCarryItem(source, Rewarditem, reward) then
+                    exports.ox_inventory:AddItem(src, Rewarditem, reward)
+                    return true
+                else
+                         -- Put a Notif of full inventory here
+                        Data = {
+                            title = "OX Inventory",
+                            description = "Inventory is Full",
+                            type = 'error',
+                            duration = 5000
+                        }
+                        TriggerClientEvent('ox_lib:notify', source, Data)
+                end
                cb(true)
                local message = "**Steam:** " .. GetPlayerName(src) .. "\n**CID:** " ..Player.PlayerData.citizenid .. "\n**ID:** " .. src .. "\n**Log:** Successful metalscrap!"
                discordLog(message, Webhook)
