@@ -1,5 +1,5 @@
 LANGUAGE = 'en'
-Webhook = "https://discord.com/api/webhooks/1199586146011861065/8blox6qMw6vSw8ahbVa0Zzgjam6NwTnluNBN5j_XWjHj8YGTW0mbdMqef6eMJ75fbclQ" -- Discord Webhook
+Webhook = "" -- Discord Webhook
 
 Framework = "QB" -- QB or ESX
 
